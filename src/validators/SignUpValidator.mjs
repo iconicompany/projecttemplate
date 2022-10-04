@@ -1,8 +1,10 @@
-import Request from '../core/Request.mjs';
-
-export default class SignUpRequest extends Request {
-  constructor({ userRepository, request }) {
-    super(request);
+export default class SignUpValidator {
+  /**
+   *
+   * @param userRepository
+   * @param request
+   */
+  constructor({ userRepository }) {
     this.userRepository = userRepository;
   }
 

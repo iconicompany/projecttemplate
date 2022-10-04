@@ -9,18 +9,18 @@ export default class AuthController extends Controller {
 	 * @returns {Promise<*>}
 	 */
 	async signIn({ authService, request }) {
-		return authService.signIn(request.all());
+		return authService.signIn(request);
 	}
 
 	/**
 	 * Регистрация
 	 *
 	 * @param {UserService} userService
-	 * @param {SignUpRequest} signUpRequest
+	 * @param {SignUpValidator} SignUpValidator
 	 * @returns {Promise<void>}
 	 */
-	async signUp({ userService, signUpRequest }) {
-		await signUpRequest.validate();
-		await userService.createUser(signUpRequest.all());
+	async signUp({ userService, signUpValidator, request }) {
+		await signUpValidator.validate(request);
+		await userService.createUser(request);
 	}
 }

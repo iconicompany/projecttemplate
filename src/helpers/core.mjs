@@ -10,6 +10,16 @@ export function handleRequest(controller, method, responseHandler = JsonResponse
   }
 }
 
+export function handlePage(usecase, method) {
+  return async (req, res, next) => {
+    const scope = await createScope(req, res, next);
+    const instance = new usecase(scope.cradle)
+    const result = await instance[method](scope.cradle);
+
+    return { props: result }
+  }
+}
+
 export async function createScope(req, res, next) {
   const kernel = new Kernel();
 

@@ -10,33 +10,33 @@ export default class DictionaryController extends CrudController {
 
   /**
    * @param {Request} request
-   * @returns {Promise<User>}
+   * @returns {Promise<*>}
    */
   async create({ request }) {
-    return this.repository.create(request.all());
+    return this.repository.create(request);
   }
 
   /**
    * @param {Request} request
-   * @returns {Promise<User>}
+   * @returns {Promise<*>}
    */
   async read({ request }) {
-    return this.repository.read(request.get('id'));
+    return this.repository.read(request.id);
   }
 
   /**
    * @param {Request} request
-   * @returns {Promise<User>}
+   * @returns {Promise<*>}
    */
   async update({ request }) {
-    return this.repository.update(request.all());
+    return this.repository.update(request);
   }
 
   /**
    * @param {Request} request
-   * @returns {Promise<User>}
+   * @returns {Promise<*>}
    */
   async delete({ request }) {
-    return this.repository.delete(request.get('id'));
+    return this.repository.delete(request.id);
   }
 }

@@ -3,8 +3,6 @@ import { Card } from 'antd';
 import { useEffect, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import btnStyles from '../../styles/buttons.module.scss'
-// import PermissionModal from '../../public/components/modals/PermissionModal';
-// import Popup from '../../public/helpers/Popup';
 
 export default function Permissions() {
   const [isOpen, setOpen] = useState(false);

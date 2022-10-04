@@ -1,0 +1,1 @@
+INSERT INTO public."Role" (code, title, "updatedAt") values ('admin', 'Admin', CURRENT_TIMESTAMP)
