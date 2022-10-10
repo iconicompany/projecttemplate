@@ -72,8 +72,14 @@ export default class Api {
   }
 
   static async handleResponse(res) {
-    const body = await res.json(); // todo может прийти и не json
+    let body;
 
-    return res.ok ? { ok: true, body } : { ok: false, error: body.error };
+    if (res.headers.get('Content-Type')?.includes('application/json')) {
+      body = await res.json();
+    } else {
+      body = await res.text();
+    }
+
+    return { ok: res.ok, body };
   }
 }

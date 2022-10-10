@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { createScope } from '../../../src/helpers/core'
-import AuthController from '../../../src/http/controllers/AuthController.mjs';
+import AuthUsecases from '../../../src/http/usecases/AuthUsecases.mjs';
 
 export default NextAuth({
   providers: [
@@ -19,7 +19,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         const scope = await createScope(req);
         try {
-          return new AuthController().signIn(scope.cradle);
+          return new AuthUsecases().signIn(scope.cradle);
         } catch (err) {
           console.log(err);
         }

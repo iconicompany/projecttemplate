@@ -30,7 +30,7 @@ model User {
   id         Int      @id @default(autoincrement())
   login      String   @unique
   name       String
-  password   String
+  password   String?
   data       Json?
   roleId     Int
   role       Role     @relation(fields: [roleId], references: [id])

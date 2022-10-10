@@ -6,15 +6,52 @@ import {
 	NodeIndexOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import LoginBtn from './LoginBtn'
+import { getUserPermissions } from '../../helpers/utils.mjs';
 
 const { Header, Sider, Content } = Layout;
 
 const AppLayout = ({ children }) => {
-	const router = useRouter()
-	const [collapsed, setCollapsed] = useState(false)
+	const router = useRouter();
+	const [collapsed, setCollapsed] = useState(true);
+	const [tabs, setTabs] = useState([]);
+
+	useEffect(async () => {
+		const userPermissions = await getUserPermissions();
+
+		setTabs([
+			{
+				key: '1',
+				icon: <UserOutlined/>,
+				label: 'Домашняя',
+				href: '/'
+			},
+			{
+				key: '2',
+				icon: <UsergroupAddOutlined />,
+				label: 'Пользователи',
+				href: '/users',
+				permission: 'users_read'
+			},
+			{
+				key: '3',
+				icon: <NodeIndexOutlined />,
+				label: 'Роли',
+				href: '/dictionaries/roles',
+				permission: 'roles_read'
+			},
+			{
+				key: '4',
+				icon: <NodeIndexOutlined />,
+				label: 'Права',
+				href: '/dictionaries/permissions',
+				permission: 'permissions_read'
+			}
+		].filter(tab => !tab.permission || userPermissions.includes(tab.permission)))
+	}, [])
+
 	return (
 		<Layout>
 			<Sider trigger={null} collapsible collapsed={collapsed}>
@@ -26,32 +63,7 @@ const AppLayout = ({ children }) => {
 					theme="dark"
 					mode="inline"
 					defaultSelectedKeys={['1']}
-					items={[
-						{
-							key: '1',
-							icon: <UserOutlined/>,
-							label: 'Домашняя',
-							href: '/'
-						},
-						{
-							key: '2',
-							icon: <UsergroupAddOutlined />,
-							label: 'Пользователи',
-							href: '/users'
-						},
-						{
-							key: '3',
-							icon: <NodeIndexOutlined />,
-							label: 'Роли',
-							href: '/dictionaries/roles'
-						},
-						{
-							key: '4',
-							icon: <NodeIndexOutlined />,
-							label: 'Права',
-							href: '/dictionaries/permissions'
-						}
-					]}
+					items={tabs}
 				/>
 			</Sider>
 			<Layout className="site-layout">

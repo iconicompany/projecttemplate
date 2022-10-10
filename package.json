@@ -14,8 +14,8 @@
     "@babel/plugin-proposal-do-expressions": "^7.18.6",
     "@ilb/node_rest": "^1.1.6",
     "@prisma/client": "^3.15.2",
-    "accesscontrol": "^2.2.1",
     "ajv": "^8.11.0",
+    "ajv-i18n": "^4.2.0",
     "antd": "^4.21.5",
     "awilix": "^7.0.3",
     "bcrypt": "^5.0.1",
@@ -47,7 +47,6 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
-    "prisma": "^3.15.2",
-    "sequelize-cli": "^6.4.1"
+    "prisma": "^3.15.2"
   }
 }

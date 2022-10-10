@@ -4,8 +4,25 @@ export default class DictionaryController extends CrudController {
   /**
    * @returns {Promise<*>}
    */
+  async index() {
+    const data = await this.repository.getAll();
+
+    return { data };
+  }
+
+  /**
+   * @return {Promise<void>}
+   */
+  async show() {
+
+  }
+
+  /**
+   *
+   * @return {Promise<*>}
+   */
   async list() {
-    return this.repository.list();
+    return this.repository.getAll();
   }
 
   /**
@@ -21,7 +38,7 @@ export default class DictionaryController extends CrudController {
    * @returns {Promise<*>}
    */
   async read({ request }) {
-    return this.repository.read(request.id);
+
   }
 
   /**

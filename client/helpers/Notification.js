@@ -17,7 +17,7 @@ export default class Notification {
     this.openNotification('warning', title, description, duration);
   }
 
-  static error(title, description = '', duration = 5) {
+  static error(title = 'Упс... Что-то пошло не так.', description = '', duration = 5) {
     this.openNotification('error', title, description, duration);
   }
 }

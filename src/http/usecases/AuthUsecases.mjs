@@ -1,6 +1,6 @@
 import Controller from '../../core/controllers/Controller.mjs';
 
-export default class AuthController extends Controller {
+export default class AuthUsecases extends Controller {
 	/**
 	 * Авторизация
 	 *

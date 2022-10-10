@@ -1,23 +1,45 @@
-import { Button, PageHeader, Table, Typography } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import btnStyles from '../../styles/buttons.module.scss'
+import Access from '../../client/components/core/Access';
+import { handlePage } from '../../src/helpers/core.mjs';
+import PermissionUsecases from '../../src/http/usecases/PermissionUsecases.mjs';
+import Notification from '../../client/helpers/Notification';
+import PermissionResource from '../../client/resources/PermissionResource.mjs';
+import PermissionModal from '../../client/components/modals/PermissionModal';
 
-export default function Permissions() {
+const { Title } = Typography;
+
+export default function Permissions({ data }) {
   const [isOpen, setOpen] = useState(false);
-  const [tableData, setTableData] = useState([]);
+  const [editedPermission, setEditedPermission] = useState({});
+  const [tableData, setTableData] = useState(data);
 
-  const fetchData = () => {
+  const refresh = async () => {
+    const permissions = await PermissionResource.getList();
+
+    setTableData(permissions);
   }
 
-  const createPermission = () => {
+  const create = () => {
+    setEditedPermission({});
+    setOpen(true);
   }
 
-  const editPermission = (permission) => {
+  const edit = (permission) => {
+    setEditedPermission(permission);
+    setOpen(true);
   }
 
-  const removePermission = async (permission) => {
+  const remove = async (permission) => {
+    if (confirm(`Удалить право ${permission.title}?`)) {
+      PermissionResource.delete(permission.id).then(() => {
+        Notification.success();
+        refresh();
+      }).catch(err => Notification.error(err.message));
+    }
   }
 
   const columns = [
@@ -41,33 +63,32 @@ export default function Permissions() {
       render: (record) =>
         (
           <div className={btnStyles.button_group}>
-            <Button onClick={() => editPermission(record)} type="primary" shape="circle" icon={<EditOutlined/>}/>
-            <Button onClick={() => removePermission(record)} type="primary" danger shape="circle" icon={<DeleteOutlined/>}/>
+            <Button onClick={() => edit(record)} type="primary" shape="circle" icon={<EditOutlined/>}/>
+            <Button onClick={() => remove(record)} type="primary" danger shape="circle" icon={<DeleteOutlined/>}/>
           </div>
         )
     },
   ];
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <div>
       <Card>
-        <PageHeader
-          title="Title"
-          extra={[
-            <Button onClick={() => createPermission()} key="1" type="primary">Создать роль</Button>,
-          ]}
-        >
-        </PageHeader>
+        <Title level={4}>
+          <span>Права</span>
+          <Access permission='permissions_create'>
+            <span className="right">
+              <Button onClick={create} key="1" type="primary">Создать</Button>
+            </span>
+          </Access>
+        </Title>
         <Table
           columns={columns}
           dataSource={tableData}
         />
       </Card>
-      {/*<PermissionModal isOpen={isOpen} hideModal={() => setOpen(false)} />*/}
+      <PermissionModal permission={editedPermission} isOpen={isOpen} hideModal={() => setOpen(false)} afterSave={refresh} />
     </div>
   )
 }
+
+export const getServerSideProps = handlePage(PermissionUsecases, 'index', 'permissions_read');

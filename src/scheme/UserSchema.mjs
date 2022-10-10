@@ -9,7 +9,7 @@ export default class UserSchema extends Schema {
         name: { title: 'Имя', type: 'string', isNotEmpty: true },
         roleId: { title: 'Роль', type: 'number' }
       },
-      required: ['login', 'name'],
+      required: ['login', 'name', 'roleId'],
     }
   }
 }

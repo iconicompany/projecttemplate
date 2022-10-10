@@ -4,12 +4,23 @@
 ```
 cat scripts/schema.pg.sql | sudo -u postgres psql
 ```
-
+2. Создание .env:
+```
+cp .env.example .env
+```
+3. Установка зависимостей:
+```
+pnpm install // or npm install
+```
+4. Запуск миграций:
+```
+prisma migrate dev
+```
 Старт сервера в дев режиме
 ```
 npm run dev
 ```
-Страница входа: http://127.0.0.1:3000/signin
+Страница входа: http://127.0.0.1:3000/projecttemplate/signin
 
 Данные пользователя:
 ```

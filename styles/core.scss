@@ -44,3 +44,41 @@ div.logo {
   height: 65px;
   width: 200px;
 }
+
+.defaultCheckbox {
+  .ant-row {
+    flex-direction: row-reverse;
+    justify-content: left;
+    margin-bottom: 0 !important;
+  }
+  .ant-form-item-control {
+    max-width: 35px;
+    height: 15px;
+  }
+  label::after {
+    content: ''
+  }
+}
+
+
+.btnRight {
+  float: right;
+}
+
+.wrapperTop {
+  margin-top: 10px;
+}
+
+.wrapperBottom {
+  margin-bottom: 10px;
+}
+
+.wrapperY {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.wrapperX {
+  margin-left: 10px;
+  margin-right: 10px;
+}

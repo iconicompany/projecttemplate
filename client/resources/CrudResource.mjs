@@ -7,17 +7,27 @@ export default class CrudResource extends Resource {
    * @returns {Promise<[]>}
    */
   static async getList(data = {}) {
-    const res = await Api.get(`/${this.path}`, data);
-    return this.handleResponse(res);
+    return this.processRequest('get', `/${this.path}`, data)
   }
+
+  /**
+   * @param data
+   * @return {Promise<*|undefined>}
+   */
+  static async store(data) {
+    if (data.id) {
+      return this.update(data.id, data);
+    } else {
+      return this.create(data);
+    }
+  };
 
   /**
    * @param {object} data
    * @returns {Promise<object>}
    */
   static async create(data) {
-    const res = await Api.post(`/${this.path}`, data);
-    return this.handleResponse(res);
+    return this.processRequest('post', `/${this.path}`, data)
   };
 
   /**
@@ -25,8 +35,7 @@ export default class CrudResource extends Resource {
    * @returns {Promise<object>}
    */
   static async read(id) {
-    const res = await Api.get(`/${this.path}/${id}`);
-    return this.handleResponse(res);
+    return this.processRequest('get', `/${this.path}/${id}`)
   };
 
   /**
@@ -35,8 +44,7 @@ export default class CrudResource extends Resource {
    * @returns {Promise<null>}
    */
   static async update(id, data) {
-    const res = await Api.put(`/${this.path}/${id}`, data);
-    return this.handleResponse(res);
+    return this.processRequest('put', `/${this.path}/${id}`, data)
   };
 
   /**
@@ -44,15 +52,6 @@ export default class CrudResource extends Resource {
    * @returns {Promise<null>}
    */
   static async delete(id) {
-    const res = await Api.delete(`/${this.path}/${id}`);
-    return this.handleResponse(res);
-  }
-
-  /**
-   * @param res
-   * @returns {*|null}
-   */
-  static handleResponse(res) {
-    return res.ok ? res.body : null;
+    return this.processRequest('delete', `/${this.path}/${id}`)
   }
 }

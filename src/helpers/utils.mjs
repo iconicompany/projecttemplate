@@ -11,11 +11,25 @@ export const buildRequest = (req) => {
 
   if (req.params) {
     request = { ...request, ...req.params };
+
+    if (req?.params?.id) {
+      request.id = parseInt(req.params.id)
+    }
   }
 
   if (req.query) {
     request = { ...request, ...req.query };
+
+    if (req?.query?.id) {
+      request.id = parseInt(req.query.id)
+    }
   }
 
   return request;
+}
+
+export const filterObject = (object, callback) => {
+  return Object.keys(object)
+    .filter( key => callback(object[key]) )
+    .reduce( (res, key) => (res[key] = object[key], res), {} );
 }

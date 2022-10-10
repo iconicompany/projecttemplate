@@ -16,10 +16,11 @@ export default class AuthService extends Service {
     }
 
     const user = await this.userRepository.findByLogin(data.login);
+
     if (!user) {
       throw Error('User not found.')
     }
-    console.log(data.password, user.password);
+
     if (!PasswordHelper.compareWithHash(data.password, user.password)) {
       throw Error('Incorrect password.')
     }

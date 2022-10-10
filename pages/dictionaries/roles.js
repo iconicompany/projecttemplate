@@ -1,25 +1,44 @@
-import { Button, PageHeader, Table, Typography } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import btnStyles from '../../styles/buttons.module.scss'
-// import RoleModal from '../../public/components/modals/RoleModal';
-// import Popup from '../../public/helpers/Popup';
+import { handlePage } from '../../src/helpers/core.mjs';
+import RoleUsecases from '../../src/http/usecases/RoleUsecases.mjs';
+import Access from '../../client/components/core/Access';
+import RoleModal from '../../client/components/modals/RoleModal';
+import RoleResource from '../../client/resources/RoleResource.mjs';
+import Notification from '../../client/helpers/Notification';
+const { Title } = Typography;
 
-export default function Roles() {
+export default function Roles({ roles, permissions }) {
   const [isOpen, setOpen] = useState(false);
-  const [tableData, setTableData] = useState([]);
+  const [editedRole, setEditedRole] = useState({});
+  const [tableData, setTableData] = useState(roles);
 
-  const fetchData = () => {
+  const refresh = async () => {
+    const roles = await RoleResource.getList();
+
+    setTableData(roles);
   }
 
-  const createRole = () => {
+  const create = () => {
+    setEditedRole({});
+    setOpen(true);
   }
 
-  const editRole = (role) => {
+  const edit = (role) => {
+    setEditedRole(role);
+    setOpen(true);
   }
 
-  const removeRole = async (role) => {
+  const remove = async (role) => {
+    if (confirm(`Удалить роль ${role.title}?`)) {
+      RoleResource.delete(role.id).then(() => {
+        Notification.success();
+        refresh();
+      }).catch(err => Notification.error(err.message));
+    }
   }
 
   const columns = [
@@ -40,36 +59,34 @@ export default function Roles() {
     },
     {
       title: 'Действия',
-      render: (record) =>
-        (
-          <div className={btnStyles.button_group}>
-            <Button onClick={() => editRole(record)} type="primary" shape="circle" icon={<EditOutlined/>}/>
-            <Button onClick={() => removeRole(record)} type="primary" danger shape="circle" icon={<DeleteOutlined/>}/>
-          </div>
-        )
+      render: (record) => (
+        <div className={btnStyles.button_group}>
+          <Button onClick={() => edit(record)} type="primary" shape="circle" icon={<EditOutlined/>}/>
+          <Button onClick={() => remove(record)} type="primary" danger shape="circle" icon={<DeleteOutlined/>}/>
+        </div>
+      )
     },
   ];
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div>
       <Card>
-        <PageHeader
-          title="Title"
-          extra={[
-            <Button onClick={() => createRole()} key="1" type="primary">Создать роль</Button>,
-          ]}
-        >
-        </PageHeader>
+        <Title level={4}>
+          <span>Роли</span>
+          <Access permission='roles_create'>
+            <span className="right">
+              <Button onClick={create} key="1" type="primary">Создать</Button>
+            </span>
+          </Access>
+        </Title>
         <Table
           columns={columns}
           dataSource={tableData}
         />
       </Card>
-      {/*<RoleModal isOpen={isOpen} hideModal={() => setOpen(false)} />*/}
+      <RoleModal role={editedRole} permissions={permissions} isOpen={isOpen} hideModal={() => setOpen(false)} afterSave={refresh} />
     </div>
   )
 }
+
+export const getServerSideProps = handlePage(RoleUsecases, 'index', 'roles_read');

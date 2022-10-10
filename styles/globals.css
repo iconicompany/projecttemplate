@@ -22,3 +22,7 @@ a {
 .ant-row>.ant-col {
   padding: 0 10px;
 }
+
+.right {
+  float: right;
+}

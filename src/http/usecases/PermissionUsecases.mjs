@@ -1,6 +1,6 @@
 import DictionaryController from '../../core/controllers/DictionaryController.mjs';
 
-export default class PermissionController extends DictionaryController {
+export default class PermissionUsecases extends DictionaryController {
   /**
    * @param {PermissionRepository} permissionRepository
    */
