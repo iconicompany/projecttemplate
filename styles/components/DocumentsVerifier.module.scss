@@ -1,0 +1,16 @@
+.documentsVerifier {
+  :global {
+    .ant-drawer-content-wrapper {
+      width: 100% !important;
+    }
+    
+    .ant-drawer-body {
+      background-color: #f0f2f5;
+      padding: 16px;
+    }
+
+    .ant-tabs-left > .ant-tabs-nav .ant-tabs-tab + .ant-tabs-tab {
+      margin-top: 6px;
+    }
+  }
+}

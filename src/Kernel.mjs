@@ -3,6 +3,8 @@ import path from 'path';
 import glob from 'glob';
 import prisma from './libs/prisma.mjs';
 import { buildRequest } from './helpers/utils.mjs';
+import Access from './core/Access.mjs';
+import { getSession } from "next-auth/react"
 
 export default class Kernel {
   constructor() {
@@ -20,12 +22,14 @@ export default class Kernel {
   }
 
   async registerValues(req, res, next) {
+    const session = await getSession(req);
     this.container.register({
-      // socket: asValue(res?.socket?.server?.io),
+      user: asValue(session?.user),
       next: asValue(next),
       req: asValue(req),
       request: asValue(buildRequest(req)),
-      prisma: asValue(prisma)
+      prisma: asValue(prisma),
+      access: asClass(Access),
     });
   }
 

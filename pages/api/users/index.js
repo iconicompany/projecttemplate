@@ -1,8 +1,8 @@
 import { createRouter } from 'next-connect';
 import { handleRequest } from '../../../src/helpers/core.mjs';
-import UserController from '../../../src/http/controllers/UserController.mjs';
+import UserUsecases from '../../../src/usecases/UserUsecases.mjs';
 
 export default createRouter()
-  .get(handleRequest(UserController, 'list'))
-  .post(handleRequest(UserController, 'create'))
+  .get(handleRequest(UserUsecases, 'list'))
+  .post(handleRequest(UserUsecases, 'create'))
   .handler();

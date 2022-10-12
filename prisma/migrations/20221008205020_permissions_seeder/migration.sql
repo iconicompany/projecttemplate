@@ -1,0 +1,25 @@
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (1, 'users_create', 'Добавление пользователей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (2, 'users_read', 'Просмотр пользователей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (3, 'users_update', 'Редактирование пользователей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (4, 'users_delete', 'Удаление пользователей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (5, 'roles_create', 'Добавление ролей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (6, 'roles_read', 'Просмотр ролей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (7, 'roles_update', 'Редактирование ролей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (8, 'roles_delete', 'Удаление ролей', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (9, 'permissions_create', 'Добавление прав', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (10, 'permissions_read', 'Просмотр прав', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (11, 'permissions_update', 'Редактирование прав', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO public."Permission" (id, code, title, "createdAt", "updatedAt") values (12, 'permissions_delete', 'Удаление прав', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO public."_PermissionToRole" ("A", "B") values (1, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (2, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (3, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (4, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (5, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (6, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (7, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (8, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (9, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (10, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (11, 1);
+INSERT INTO public."_PermissionToRole" ("A", "B") values (12, 1);

@@ -1,6 +1,6 @@
 import { withRouter } from 'next/router';
-import Notification from '../public/helpers/Notification';
-import { signIn } from '../public/resources/auth';
+import Notification from '../client/helpers/Notification';
+import { signIn } from '../client/resources/auth';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
 import createSchemaBridge from '../src/libs/uniforms-bridge.mjs';
 import SigninSchema from '../src/scheme/SigninSchema.mjs';

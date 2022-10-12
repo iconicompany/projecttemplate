@@ -1,9 +1,9 @@
 import { createRouter } from 'next-connect';
 import { handleRequest } from '../../../src/helpers/core.mjs';
-import PermissionController from '../../../src/http/controllers/PermissionController.mjs';
+import PermissionUsecases from '../../../src/usecases/PermissionUsecases.mjs';
 
 export default createRouter()
-  .get(handleRequest(PermissionController, 'read'))
-  .put(handleRequest(PermissionController, 'update'))
-  .delete(handleRequest(PermissionController, 'delete'))
+  .get(handleRequest(PermissionUsecases, 'read'))
+  .put(handleRequest(PermissionUsecases, 'update'))
+  .delete(handleRequest(PermissionUsecases, 'delete'))
   .handler();

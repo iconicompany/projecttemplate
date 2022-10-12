@@ -14,16 +14,49 @@ export default class Repository {
     this.model = this.prisma[modelName];
   }
 
-  async findUnique(data) {
-    return this.model.findUnique({ where: data });
+  async getAll(params) {
+    const result = await this.model.findMany();
+
+    return this.formatResult(result, params)
   }
 
-  async findById(id) {
-    return this.model.findUnique({ where: { id } });
+  async getAllPaginated(params) {
+    const total = await this.model.count();
+    const rows = await this.model.findMany({
+      ...(params.order && {
+        orderBy: [
+          {
+            [params.field]: params.order === 'descend' ? 'desc' : 'asc'
+          }
+        ]
+      }),
+      skip: (params.pageSize * params.current) - params.pageSize,
+      take: parseInt(params.pageSize),
+      include: params.include || {}
+    });
+
+    return {
+      total,
+      rows: this.formatResult(rows, params)
+    }
   }
 
-  async findByUuid(uuid) {
-    return this.model.findUnique({ where: { uuid } });
+  async findUnique(data, params) {
+    const result = await this.model.findUnique({ where: data });
+
+    return this.formatResult(result, params)
+  }
+
+  async findById(id, params) {
+    const result = await this.model.findUnique({ where: { id } });
+
+    return this.formatResult(result, params)
+  }
+
+  async findByUuid(uuid, params) {
+    const result = await this.model.findUnique({ where: { uuid } });
+
+    return this.formatResult(result, params)
   }
 
   async create(data) {
@@ -37,6 +70,34 @@ export default class Repository {
   async upsert(filter, data) {
     return this.model.upsert({ where: filter, update: data, create: data })
   }
+
+  async delete(id) {
+    return this.model.delete({ where: {id} })
+  }
+
+  formatResult(data, params) {
+    if (!params?.withDates) {
+      return this.removeDates(data)
+    }
+
+    return data;
+  }
+
+  removeDates(data) {
+    if (data === null) { // ничего не найдено
+      return data;
+    }
+
+    if (Array.isArray(data)) { // массив
+      return data.map(({ createdAt, updatedAt, ...row }) => row)
+    }
+
+    // одна запись
+    const { createdAt, updatedAt, ...row } = data;
+
+    return row;
+  }
+
 
   getUniqueFilter({ id, uid, uuid }) {
     if (id) {

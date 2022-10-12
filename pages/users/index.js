@@ -1,30 +1,32 @@
-import { Table, Typography } from 'antd';
+import { Button, Table, Tag, Typography } from 'antd';
 
 const { Title } = Typography;
 import { Card } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import UserResource from '../../client/resources/UserResource.mjs';
+import { handlePage } from '../../src/helpers/core.mjs';
+import UserUsecases from '../../src/usecases/UserUsecases.mjs';
+import EditUserModal from '../../client/components/profile/EditUserModal';
+import Access from '../../client/components/core/Access';
 
-export default function Home() {
+export default function UserList({ roles }) {
   const router = useRouter();
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
-  const [tableData, setTableData] = useState({ meta: {}, rows: []});
-  const fetchData = () => {
-    setTableData({
-      meta: {},
-      rows: [
-        {
-          id: 1,
-          name: 'test name',
-          login: 'test login',
-        }
-      ]
-    })
+  const [params, setParams] = useState({ pagination: { current: 1, pageSize: 10 } });
+  const [tableData, setTableData] = useState([]);
+  const [isOpenEdit, openEdit] = useState(false);
+
+  const fetchData = async ({ pagination, filters, sorter }) => {
+    const data = await UserResource.getList({ ...pagination, ...filters, ...sorter })
+    setTableData(data.rows)
+    setParams({ pagination: { ...pagination, total: data.total}, filters, sorter })
   }
 
   useEffect(() => {
-    setPagination({ ...pagination, ...tableData.meta })
-  }, [tableData])
+    fetchData(params);
+  }, []);
+
+
   const columns = [
     {
       title: '#',
@@ -41,30 +43,57 @@ export default function Home() {
       dataIndex: 'login',
       sorter: true,
     },
+    {
+      title: 'Роль',
+      dataIndex: ['relationMembers', 0, 'role', 'title'],
+    },
+    {
+      title: 'Статус',
+      dataIndex: 'isBlocked',
+      render: (isBlocked) => {
+        return (
+          <span className="user-status">
+            {isBlocked && <Tag color="error">Заблокирован</Tag>}
+            {!isBlocked && <Tag color="success">Активен</Tag>}
+          </span>
+        );
+      }
+    },
   ];
 
-  const handleTableChange = (newPagination, filters, sorter) => {
-    fetchData({ ...sorter, ...newPagination, ...filters });
+  const handleTableChange = async (pagination, filters, sorter) => {
+    await fetchData({ pagination, filters, ...(sorter.column && { sorter })});
   };
-
-  useEffect(() => {
-    fetchData(pagination);
-  }, []);
 
   return (
     <div>
       <Card>
-        <Title level={4}>Пользователи</Title>
+        <Title level={4}>
+          <span>Пользователи</span>
+          <Access permission='users_create'>
+            <span className="right">
+              <Button onClick={() => openEdit(true)} type="primary">Создать</Button>
+              <EditUserModal
+                isOpen={isOpenEdit}
+                hideModal={() => openEdit(false)}
+                roles={roles}
+                afterSave={() => fetchData(params)}
+              />
+            </span>
+          </Access>
+        </Title>
         <Table
           onRow={(record) => ({
-            onClick: () => router.push(`users/${record.id}`)
+            onClick: async () => await router.push(`users/${record.id}`)
           })}
           columns={columns}
-          dataSource={tableData.rows}
-          pagination={pagination}
+          dataSource={tableData}
+          pagination={params.pagination}
           onChange={handleTableChange}
         />
       </Card>
     </div>
   )
 }
+
+export const getServerSideProps = handlePage(UserUsecases, 'index', 'users_read');

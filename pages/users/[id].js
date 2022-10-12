@@ -1,51 +1,27 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { Avatar, Card, Col, Row } from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import Meta from 'antd/lib/card/Meta';
-import EditUserModal from '../../public/components/modals/EditUserModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { readUser } from '../../public/redux/reducers/usersReducer';
+import { useState } from 'react';
+import { Col, Row } from 'antd';
+import UserUsecases from '../../src/usecases/UserUsecases.mjs';
+import { handlePage } from '../../src/helpers/core.mjs';
+import styles from '../../styles/pages/User.module.scss';
+import UserProfileCard from '../../client/components/profile/UserProfileCard';
+import UserInfoCard from '../../client/components/profile/UserInfoCard';
 
-export default function Home() {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.current);
-  const [isOpenEdit, openEdit] = useState(false);
-  const fetchData = async () => dispatch(await readUser(id));
-
-  useEffect(() => {
-    fetchData().catch(console.log);
-  }, []);
-
+export default function Home({ roles, user }) {
+  const [userData, setUser] = useState(user);
+  const afterSave = async (user) => setUser(user);
 
   return (
-    <div className="site-card-wrapper">
+    <div className={styles.userProfile}>
       <Row gutter={16}>
         <Col span={8}>
-          <Card
-            actions={[
-              <EditOutlined key="edit" onClick={() => openEdit(true)} />,
-              <SettingOutlined key="setting"/>,
-              <EllipsisOutlined key="ellipsis" />,
-            ]}
-          >
-            <Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={user.name}
-              description={user.role?.title || 'Нет роли'}
-            />
-          </Card>
+          <UserProfileCard user={userData} roles={roles} afterSave={afterSave} />
         </Col>
         <Col span={16}>
-          <Card title="Card title" bordered={false}>
-            Card content
-          </Card>
+          <UserInfoCard />
         </Col>
       </Row>
-      <EditUserModal isOpen={isOpenEdit} hideModal={() => openEdit(false)} user={user} />
     </div>
-  )
+  );
 }
+
+export const getServerSideProps = handlePage(UserUsecases, 'show', 'users_read');

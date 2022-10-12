@@ -1,9 +1,9 @@
 import { createRouter } from 'next-connect';
 import { handleRequest } from '../../../src/helpers/core.mjs';
-import UserController from '../../../src/http/controllers/UserController.mjs';
+import UserUsecases from '../../../src/usecases/UserUsecases.mjs';
 
 export default createRouter()
-  .get(handleRequest(UserController, 'read'))
-  .put(handleRequest(UserController, 'update'))
-  .delete(handleRequest(UserController, 'delete'))
+  .get(handleRequest(UserUsecases, 'read'))
+  .put(handleRequest(UserUsecases, 'update'))
+  .delete(handleRequest(UserUsecases, 'delete'))
   .handler();
