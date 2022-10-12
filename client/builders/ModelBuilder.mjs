@@ -1,4 +1,4 @@
-import { filterObjByKey } from './utils.mjs';
+import { filterObjByKey } from '../helpers/utils.mjs';
 
 export default class ModelBuilder {
   // todo сделать поддержку вложенных полей

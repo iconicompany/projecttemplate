@@ -84,6 +84,7 @@ export default class UserRepository extends Repository {
           select: {
             role: {
               select: {
+                id: true,
                 code: true,
                 title: true
               }

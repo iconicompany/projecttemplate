@@ -5,10 +5,10 @@ import UserResource from '../../resources/UserResource.mjs';
 import Notification from '../../helpers/Notification';
 import UserSchema from '../../../src/scheme/UserSchema.mjs';
 import { useEffect, useState } from 'react';
-import ModelBuilder from '../../helpers/ModelBuilder.mjs';
 import EditUserModal from './EditUserModal';
 import { checkAccess } from '../../helpers/utils.mjs';
 import Access from '../core/Access';
+import UserModelBuilder from '../../builders/UserModelBuilder.mjs';
 
 const schema = UserSchema.get();
 
@@ -48,7 +48,7 @@ const UserProfileCard = ({ user, roles, afterSave }) => {
     });
   }, [user.isBlocked]);
   useEffect(() => {
-    setModel(ModelBuilder.make(user, schema));
+    setModel(UserModelBuilder.make(user, schema));
   }, [user]);
 
   const block = async () => {

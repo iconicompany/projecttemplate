@@ -5,8 +5,8 @@ import Map from '../../helpers/Map';
 import { useEffect, useState } from 'react';
 import UserResource from '../../resources/UserResource.mjs';
 import Notification from '../../helpers/Notification';
-import ModelBuilder from '../../helpers/ModelBuilder.mjs';
 import UserSchema from '../../../src/scheme/UserSchema.mjs';
+import UserModelBuilder from '../../builders/UserModelBuilder.mjs';
 
 const schema = UserSchema.get();
 
@@ -26,7 +26,7 @@ const EditUserModal = ({ isOpen, hideModal, user = {} , roles, afterSave }) => {
   const getTitle = () => isCreate() ? 'Создание' : 'Редактирование';
 
   useEffect(() => {
-    setModel(ModelBuilder.make(user, schema));
+    setModel(UserModelBuilder.make(user, schema));
   }, [user?.id]);
 
   return (
