@@ -2,9 +2,13 @@
 
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')([
-  // '@ilb/filedossiercomponent',
+  'uniforms-bridge-json-schema',
+  'uniforms',
+  'uniforms-antd',
+  'next-auth',
+  'ajv',
+  'ajv-i18n'
 ]);
-
 
 const basePath = '/projecttemplate';
 
