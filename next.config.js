@@ -11,8 +11,11 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 const basePath = '/projecttemplate';
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = withPlugins([withTM], {
+module.exports = withPlugins([withTM,withBundleAnalyzer], {
   basePath,
   assetPrefix: basePath,
   env: {
