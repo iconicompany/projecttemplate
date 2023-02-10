@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ilb-build": "prisma generate && next build",
+    "clean": "rimraf ./.next ./out",
+    "check:es:build": "npx es-check es5 './.next/static/**/*.js' -v",
+    "escheck": "npm run clean && npm run build && npm run check:es:build"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -47,6 +51,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
-    "prisma": "^3.15.2"
+    "prisma": "^3.15.2",
+    "rimraf": "^4.1.2"
   }
 }
