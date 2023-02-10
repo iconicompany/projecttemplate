@@ -5,6 +5,7 @@ const withTM = require('next-transpile-modules')([
   'uniforms-bridge-json-schema',
   'uniforms',
   'uniforms-antd',
+  'next-auth',
   'ajv',
   'ajv-i18n'
 ]);
