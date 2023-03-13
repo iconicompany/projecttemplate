@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "ilb-build": "prisma generate && next build",
+    "dev": "ldapenv next dev",
+    "build": "ldapenv next build",
+    "start": "ldapenv next start",
+    "ilb-build": "ldapenv prisma generate && ldapenv next build",
+    "ilb-deploy": "ldapenv prisma migrate deploy",
     "clean": "rimraf ./.next ./out",
     "check:es:build": "npx es-check es5 './.next/static/**/*.js' -v",
-    "escheck": "npm run clean && npm run build && npm run check:es:build",
+    "escheck": "pnpm run clean && ldapenv pnpm run build && pnpm run check:es:build",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "prisma": {
+    "seed": "ldapenv node --experimental-specifier-resolution=node prisma/seed.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -40,6 +43,7 @@
     "uniforms-bridge-json-schema": "^3.10.0-rc.1"
   },
   "devDependencies": {
+    "@ilb/ldapenv-cli": "^1.0.10",
     "@next/bundle-analyzer": "^13.1.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",

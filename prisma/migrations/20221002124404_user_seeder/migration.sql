@@ -1,1 +1,0 @@
-INSERT INTO public."User" (login, name, password, "roleId", "createdAt", "updatedAt") VALUES ('admin','Admin', '$2b$06$W6buUDD9eVL2VloYVXtw3O/Ea3t8nJaVWCEBB65OUlTkkyuSbfT/y', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) ON CONFLICT DO NOTHING;

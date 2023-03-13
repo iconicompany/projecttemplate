@@ -15,11 +15,13 @@ const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => 
   }, [role?.id]);
 
   const store = (data) => {
-    RoleResource.store({ ...data, id: role?.id }).then(result => {
-      Notification.success();
-      hideModal();
-      afterSave && afterSave(result);
-    }).catch(err => Notification.error(err.message));
+    RoleResource.store({ ...data, id: role?.id })
+      .then((result) => {
+        Notification.success();
+        hideModal();
+        afterSave && afterSave(result);
+      })
+      .catch((err) => Notification.error(err.message));
   };
 
   function buildModel(role) {
@@ -27,8 +29,8 @@ const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => 
       return {
         title: role.title,
         code: role.code,
-        permissions: objectFill(arrayColumn(role.permissions, 'code'), true)
-      }
+        permissions: objectFill(arrayColumn(role.permissions, 'code'), true),
+      };
     } else {
       return {};
     }
@@ -36,46 +38,52 @@ const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => 
 
   const isCreate = () => !model?.id;
 
-  const getTitle = () => isCreate() ? 'Создание' : 'Редактирование';
+  const getTitle = () => (isCreate() ? 'Создание' : 'Редактирование');
 
   const mapPermissions = (permissions) => {
-    return Object.values(permissions.reduce((acc, cur) => {
-      const [name, type] = cur.code.split('_');
+    return Object.values(
+      permissions.reduce((acc, cur) => {
+        const [name, type] = cur.code.split('_');
 
-      if (!acc[name]) {
-        acc[name] = {};
-      }
+        if (!acc[name]) {
+          acc[name] = {};
+        }
 
-      acc[name][type] = cur;
+        acc[name][type] = cur;
 
-      return acc;
-    }, {}));
-  }
+        return acc;
+      }, {}),
+    );
+  };
 
   const PermissionCheckbox = (permission) => {
     return (
       <span className="defaultCheckbox">
-        <BoolField checkbox={true} name={`permissions.${permission.code}`} />
+        {permission ? (
+          <BoolField checkbox={true} name={`permissions.${permission.code}`} />
+        ) : (
+          <>—</>
+        )}
       </span>
-    )
-  }
+    );
+  };
 
   const columns = [
     {
       dataIndex: 'read',
-      render: PermissionCheckbox
+      render: PermissionCheckbox,
     },
     {
       dataIndex: 'create',
-      render: PermissionCheckbox
+      render: PermissionCheckbox,
     },
     {
       dataIndex: 'update',
-      render: PermissionCheckbox
+      render: PermissionCheckbox,
     },
     {
       dataIndex: 'delete',
-      render: PermissionCheckbox
+      render: PermissionCheckbox,
     },
   ];
 
@@ -86,19 +94,24 @@ const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => 
           layout="horizontal"
           schema={createSchemaBridge(RoleSchema.get(permissions))}
           onSubmit={store}
-          model={model}
-        >
+          model={model}>
           <Row>
             <Col xs={24} xl={12}>
-              <AutoField name="title"/>
+              <AutoField name="title" />
             </Col>
             <Col xs={24} xl={12}>
-              <AutoField name="code"/>
+              <AutoField name="code" />
             </Col>
           </Row>
           <Title level={5}>Права</Title>
-          <Table bordered pagination={false} showHeader={false} columns={columns} dataSource={mapPermissions(permissions)} />
-          <SubmitField className="wrapperTop" value="Сохранить"/>
+          <Table
+            bordered
+            pagination={false}
+            showHeader={false}
+            columns={columns}
+            dataSource={mapPermissions(permissions)}
+          />
+          <SubmitField className="wrapperTop" value="Сохранить" />
         </AutoForm>
       </Modal>
     </>

@@ -68,10 +68,13 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.user = token.user;
+      const scope = await createScope({ session: token });
+      const authUsecases = new AuthUsecases(scope.cradle);
+
+      session.user = await authUsecases.getActualAuthUserInfo(scope.cradle);
       session.accessToken = token.accessToken;
+
       return session;
-    }
+    },
   }
 });
