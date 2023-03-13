@@ -1,6 +1,6 @@
 import { createRouter } from 'next-connect';
-import { handleRequest } from '../../../src/helpers/core.mjs';
 import RoleUsecases from '../../../src/usecases/RoleUsecases.mjs';
+import { handleRequest } from '../../../src/core/index.mjs';
 
 export default createRouter()
   .get(handleRequest(RoleUsecases, 'list'))

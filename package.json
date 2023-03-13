@@ -10,7 +10,8 @@
     "ilb-build": "prisma generate && next build",
     "clean": "rimraf ./.next ./out",
     "check:es:build": "npx es-check es5 './.next/static/**/*.js' -v",
-    "escheck": "npm run clean && npm run build && npm run check:es:build"
+    "escheck": "npm run clean && npm run build && npm run check:es:build",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

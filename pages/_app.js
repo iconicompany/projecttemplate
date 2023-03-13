@@ -1,10 +1,11 @@
-import '../styles/globals.css';
+import '../client/styles/globals.css';
 import { getSession, SessionProvider } from 'next-auth/react';
 import 'antd/dist/antd.css';
-import '../styles/core.scss';
+import '../client/styles/core.scss';
 import Layout from '../client/components/core/Layout';
 import GuestLayout from '../client/components/core/GuestLayout';
 import App from 'next/app';
+import '../client/helpers/functions.mjs';
 
 function MyApp({ Component, pageProps, session }) {
   return (

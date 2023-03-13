@@ -1,7 +1,9 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { createScope } from '../../../src/helpers/core'
 import AuthUsecases from '../../../src/usecases/AuthUsecases.mjs';
+import { createScope, handle } from '../../../src/core/index.mjs';
+import JsonContext from '../../../src/core/contexts/JsonContext.mjs';
+import PageResponse from '../../../src/core/responses/PageResponse.mjs';
 
 export default NextAuth({
   providers: [
@@ -17,14 +19,35 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const scope = await createScope(req);
         try {
-          return new AuthUsecases().signIn(scope.cradle);
+          const data = { req };
+          const context = await JsonContext.build(data);
+          const result = await handle(AuthUsecases, 'signIn', [], PageResponse, context);
+          return result.props;
         } catch (err) {
           console.log(err);
+          throw new Error(err);
         }
       }
-    })
+    }),
+    CredentialsProvider({
+      name: 'Ldap',
+      id: 'ldap',
+      credentials: {
+        login: { label: 'Login', type: 'text' },
+      },
+      async authorize(credentials, req) {
+        try {
+          const data = { req };
+          const context = await JsonContext.build(data);
+          const result = await handle(AuthUsecases, 'signInLdap', [], PageResponse, context);
+          return result.props;
+        } catch (err) {
+          console.log(err);
+          throw new Error(err);
+        }
+      },
+    }),
   ],
   session: {
     maxAge: 30 * 24 * 60 * 60 // 30 days

@@ -2,13 +2,13 @@ import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
 import { useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import btnStyles from '../../styles/buttons.module.scss'
-import { handlePage } from '../../src/helpers/core.mjs';
+import btnStyles from '../../client/styles/buttons.module.scss'
 import RoleUsecases from '../../src/usecases/RoleUsecases.mjs';
 import Access from '../../client/components/core/Access';
 import RoleModal from '../../client/components/modals/RoleModal';
 import RoleResource from '../../client/resources/RoleResource.mjs';
 import Notification from '../../client/helpers/Notification';
+import { handlePage } from '../../src/core/index.mjs';
 const { Title } = Typography;
 
 export default function Roles({ roles, permissions }) {
@@ -89,4 +89,4 @@ export default function Roles({ roles, permissions }) {
   )
 }
 
-export const getServerSideProps = handlePage(RoleUsecases, 'index', 'roles_read');
+export const getServerSideProps = handlePage(RoleUsecases, 'index', 'access:roles_read');

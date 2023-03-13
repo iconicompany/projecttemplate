@@ -9,6 +9,7 @@ export default class AuthUsecases extends Usecases {
 	 * @returns {Promise<*>}
 	 */
 	async signIn({ authService, request }) {
+    console.log(request);
 		return authService.signIn(request);
 	}
 

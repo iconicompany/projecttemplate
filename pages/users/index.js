@@ -5,10 +5,10 @@ import { Card } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import UserResource from '../../client/resources/UserResource.mjs';
-import { handlePage } from '../../src/helpers/core.mjs';
 import UserUsecases from '../../src/usecases/UserUsecases.mjs';
 import EditUserModal from '../../client/components/profile/EditUserModal';
 import Access from '../../client/components/core/Access';
+import { handlePage } from '../../src/core/index.mjs';
 
 export default function UserList({ roles }) {
   const router = useRouter();
@@ -96,4 +96,4 @@ export default function UserList({ roles }) {
   )
 }
 
-export const getServerSideProps = handlePage(UserUsecases, 'index', 'users_read');
+export const getServerSideProps = handlePage(UserUsecases, 'index', 'access:users_read');

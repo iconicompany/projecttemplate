@@ -1,39 +1,36 @@
-import Kernel from '../Kernel'
-import JsonResponse from '../core/responses/JsonResponse.mjs';
-import PageResponse from '../core/responses/PageResponse.mjs';
+/**
+ * Возвращает значение из .env по ключу key.
+ * Если значение не определено - возвращает defaultValue если оно передано или null в ином случае.
+ *
+ * @param key
+ * @param defaultValue
+ * @returns {string|boolean|null}
+ */
+export const env = (key, defaultValue = null) => {
+  const value = process.env[key];
 
-export function handleRequest(controller, method, responseHandler = JsonResponse) {
-  return async (req, res, next) => {
-    try {
-      const scope = await createScope(req, res, next);
-      const instance = new controller(scope.cradle)
-      const result = await instance[method](scope.cradle);
-      await responseHandler.build(result, res);
-    } catch (exception) {
-      console.log(exception);
-      await responseHandler.exception(exception, res);
-    }
+  switch(value) {
+    case 'false':
+      return false;
+    case 'true':
+      return true;
+    case undefined:
+      return defaultValue;
+    default:
+      return value;
   }
-}
+};
 
-export function handlePage(usecase, method, permission = 'auth') {
-  return async (req, res, next) => {
-    try {
-      const scope = await createScope(req, res, next);
-      permission && await scope.cradle.access.check(permission);
-      const instance = new usecase(scope.cradle)
-      const result = await instance[method](scope.cradle);
+/**
+ * @param key
+ * @param defaultValue
+ */
+export const config = async (key, defaultValue = null) => {
+  // todo сделать кеширование файлов
+  const [configName, ...keyArr] = key.split('.');
 
-      return PageResponse.build(result);
-    } catch (exception) {
-      console.log(exception);
-      return PageResponse.exception(exception);
-    }
-  }
-}
+  const config = (await import((`../../config/${configName}.mjs`))).default;
+  const value = keyArr.reduce((o, i) => o[i], config);
 
-export async function createScope(req, res, next) {
-  const kernel = new Kernel();
-
-  return kernel.createApplication(req, res, next);
-}
+  return value !== undefined ? value : defaultValue;
+};

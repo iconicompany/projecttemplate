@@ -1,33 +1,32 @@
 import { createContainer, asValue, asClass } from 'awilix';
-import path from 'path';
-import glob from 'glob';
 import prisma from './libs/prisma.mjs';
-import { buildRequest } from './helpers/utils.mjs';
 import Access from './core/Access.mjs';
-import { getSession } from "next-auth/react"
+import AwilixRegistrar from './libs/AwilixRegistrar.mjs';
+import { isProduction } from './helpers/utils.mjs';
 
 export default class Kernel {
   constructor() {
     this.container = createContainer();
+    this.awilixRegistrar = new AwilixRegistrar(this.container);
   }
 
-  async createApplication(req, res, next) {
-    await this.registerClasses();
+  async createApplication(context) {
+    await this.awilixRegistrar.register();
     await this.registerVaryingClasses();
     await this.registerLibClasses();
-    await this.registerValues(req, res, next);
-    await this.initStatic(req, res);
+    await this.registerValues(context);
 
     return this.container;
   }
 
-  async registerValues(req, res, next) {
-    const session = await getSession(req);
+  async registerValues(context) {
     this.container.register({
-      user: asValue(session?.user),
-      next: asValue(next),
-      req: asValue(req),
-      request: asValue(buildRequest(req)),
+      user: asValue(context?.session?.user),
+      remoteUserName: asValue(
+        isProduction ? (context?.headers ? context?.headers['x-remote-user'] : null) : 'testuser1',
+      ),
+      next: asValue(context?.next),
+      request: asValue(context.request),
       prisma: asValue(prisma),
       access: asClass(Access),
     });
@@ -43,22 +42,5 @@ export default class Kernel {
     this.container.register({
       // autoChecks: asClass(AutoChecks)
     })
-  }
-
-  async registerClasses() {
-    for (const file of glob.sync('src/@(services|repositories|requests|adapters)/*.mjs')) {
-      const pathFile = path.parse(file);
-      const name = pathFile.name;
-      const folder = pathFile.dir.replace('src/', '');
-      const instanceName = name[0].toLowerCase() + name.slice(1);
-      const module = await import(`./${folder}/${name}.mjs`);
-      this.container.register({
-        [instanceName]: asClass(module.default)
-      });
-    }
-  }
-
-  async initStatic(req, res) {
-
   }
 }

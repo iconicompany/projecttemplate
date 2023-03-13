@@ -2,13 +2,13 @@ import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
 import { useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import btnStyles from '../../styles/buttons.module.scss'
+import btnStyles from '../../client/styles/buttons.module.scss'
 import Access from '../../client/components/core/Access';
-import { handlePage } from '../../src/helpers/core.mjs';
 import PermissionUsecases from '../../src/usecases/PermissionUsecases.mjs';
 import Notification from '../../client/helpers/Notification';
 import PermissionResource from '../../client/resources/PermissionResource.mjs';
 import PermissionModal from '../../client/components/modals/PermissionModal';
+import { handlePage } from '../../src/core/index.mjs';
 
 const { Title } = Typography;
 
@@ -91,4 +91,4 @@ export default function Permissions({ data }) {
   )
 }
 
-export const getServerSideProps = handlePage(PermissionUsecases, 'index', 'permissions_read');
+export const getServerSideProps = handlePage(PermissionUsecases, 'index', 'access:permissions_read');
