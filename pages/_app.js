@@ -13,7 +13,7 @@ export const UserContext = createContext();
 function MyApp({ Component, pageProps, session }) {
   return (
     <UserContext.Provider value={session}>
-      <SessionProvider session={session} basePath="/projectemplate/api/auth">
+      <SessionProvider session={session} basePath="/projecttemplate/api/auth">
         <title>Оформление сделки</title>
         {session && (
           <>
