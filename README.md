@@ -16,6 +16,10 @@ pnpm install // or npm install
 ```
 prisma migrate dev
 ```
+Если не выполнились сиды:
+```
+npx prisma db seed
+```
 Старт сервера в дев режиме
 ```
 npm run dev
