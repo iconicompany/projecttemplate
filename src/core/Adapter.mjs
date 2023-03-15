@@ -12,8 +12,6 @@ export default class Adapter {
       row.updatedAt = row.updatedAt.toString();
     }
 
-    console.log(row);
-
     return row;
   }
 }

@@ -24,7 +24,7 @@ export default class MiddlewareHandler {
 
   async process(middlewaresData, context) {
     middlewaresData = this.prepareData(middlewaresData);
-    console.log(middlewaresData);
+
     const actualMiddlewares = await this.getActualMiddlewares(Object.keys(middlewaresData));
 
     for (const key in actualMiddlewares) {

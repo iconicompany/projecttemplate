@@ -2,10 +2,13 @@ import { withRouter } from 'next/router';
 import { signIn, signUp } from '../client/resources/auth';
 import Notification from '../client/helpers/Notification';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
-import SignupSchema from '../src/scheme/SignupSchema.mjs';
 import createSchemaBridge from '../src/libs/uniforms-bridge.mjs';
+import { useContext } from 'react';
+import { AwilixContext } from './_app';
 
 const SignUp = ({ router }) => {
+  const { /** @type {SignupSchema} */ signupSchema } = useContext(AwilixContext);
+
   const submit = (values) => {
     signUp(values).then(res => {
       if (res.ok) {
@@ -23,7 +26,7 @@ const SignUp = ({ router }) => {
   };
 
   return (
-    <AutoForm schema={createSchemaBridge(SignupSchema.get())} onSubmit={submit}>
+    <AutoForm schema={createSchemaBridge(signupSchema.get())} onSubmit={submit}>
       <AutoField name="login" />
       <AutoField name="name" />
       <AutoField name="password" />

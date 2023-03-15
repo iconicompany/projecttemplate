@@ -2,22 +2,24 @@ import { Button, Table, Tag, Typography } from 'antd';
 
 const { Title } = Typography;
 import { Card } from 'antd';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import UserResource from '../../client/resources/UserResource.mjs';
 import UserUsecases from '../../src/usecases/UserUsecases.mjs';
 import EditUserModal from '../../client/components/profile/EditUserModal';
 import Access from '../../client/components/core/Access';
 import { handlePage } from '../../src/core/index.mjs';
+import { AwilixContext } from '../_app';
 
 export default function UserList({ roles }) {
+  const { /** @type {UserResource} */ userResource } = useContext(AwilixContext);
+
   const router = useRouter();
   const [params, setParams] = useState({ pagination: { current: 1, pageSize: 10 } });
   const [tableData, setTableData] = useState([]);
   const [isOpenEdit, openEdit] = useState(false);
 
   const fetchData = async ({ pagination, filters, sorter }) => {
-    const data = await UserResource.getList({ ...pagination, ...filters, ...sorter })
+    const data = await userResource.getList({ ...pagination, ...filters, ...sorter })
     setTableData(data.rows)
     setParams({ pagination: { ...pagination, total: data.total}, filters, sorter })
   }

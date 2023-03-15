@@ -1,23 +1,25 @@
 import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import btnStyles from '../../client/styles/buttons.module.scss'
+import btnStyles from '../../client/styles/components/buttons.module.scss'
 import RoleUsecases from '../../src/usecases/RoleUsecases.mjs';
 import Access from '../../client/components/core/Access';
 import RoleModal from '../../client/components/modals/RoleModal';
-import RoleResource from '../../client/resources/RoleResource.mjs';
 import Notification from '../../client/helpers/Notification';
 import { handlePage } from '../../src/core/index.mjs';
+import { AwilixContext } from '../_app';
 const { Title } = Typography;
 
 export default function Roles({ roles, permissions }) {
+  const { /** @type {RoleResource} */ roleResource } = useContext(AwilixContext);
+
   const [isOpen, setOpen] = useState(false);
   const [editedRole, setEditedRole] = useState({});
   const [tableData, setTableData] = useState(roles);
 
   const refresh = async () => {
-    const roles = await RoleResource.getList();
+    const roles = await roleResource.getList();
 
     setTableData(roles);
   }
@@ -34,7 +36,7 @@ export default function Roles({ roles, permissions }) {
 
   const remove = async (role) => {
     if (confirm(`Удалить роль ${role.title}?`)) {
-      RoleResource.delete(role.id).then(() => {
+      roleResource.delete(role.id).then(() => {
         Notification.success();
         refresh();
       }).catch(err => Notification.error(err.message));

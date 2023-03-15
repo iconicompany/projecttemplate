@@ -2,19 +2,23 @@ import { Modal } from 'antd';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
 import createSchemaBridge from '../../../src/libs/uniforms-bridge.mjs';
 import Map from '../../helpers/Map';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import UserResource from '../../resources/UserResource.mjs';
 import Notification from '../../helpers/Notification';
-import UserSchema from '../../../src/scheme/UserSchema.mjs';
+import UserSchema from '../../scheme/UserSchema.mjs';
 import UserModelBuilder from '../../builders/UserModelBuilder.mjs';
+import { AwilixContext } from '../../../pages/_app';
 
-const schema = UserSchema.get();
 
 const EditUserModal = ({ isOpen, hideModal, user = {} , roles, afterSave }) => {
+  const {
+    /** @type {UserResource} */ userResource,
+    /** @type {UserSchema} */ userSchema,
+  } = useContext(AwilixContext);
   const [model, setModel] = useState();
 
   const store = (data) => {
-    UserResource.store({ ...data, id: user?.id }).then(result => {
+    userResource.store({ ...data, id: user?.id }).then(result => {
       Notification.success();
       hideModal();
       afterSave && afterSave(result);
@@ -26,13 +30,13 @@ const EditUserModal = ({ isOpen, hideModal, user = {} , roles, afterSave }) => {
   const getTitle = () => isCreate() ? 'Создание' : 'Редактирование';
 
   useEffect(() => {
-    setModel(UserModelBuilder.make(user, schema));
+    setModel(UserModelBuilder.make(user, userSchema.get()));
   }, [user?.id]);
 
   return (
     <>
       <Modal title={getTitle()} visible={isOpen} footer={null} onCancel={hideModal}>
-        <AutoForm showInlineError schema={createSchemaBridge(schema)} onSubmit={store} model={model}>
+        <AutoForm showInlineError schema={createSchemaBridge(userSchema.get())} onSubmit={store} model={model}>
           <AutoField name="login"/>
           <AutoField name="name"/>
           <AutoField name="roleId" options={Map.forSelect(roles)} />

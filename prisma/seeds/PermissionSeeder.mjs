@@ -84,6 +84,26 @@ export default class PermissionSeeder extends Seeder {
         title: 'Удаление заявок',
       },
       {
+        id: 17,
+        code: 'settings_create',
+        title: 'Добавление настроек',
+      },
+      {
+        id: 18,
+        code: 'settings_read',
+        title: 'Просмотр настроек',
+      },
+      {
+        id: 19,
+        code: 'settings_update',
+        title: 'Редактирование настроек',
+      },
+      {
+        id: 20,
+        code: 'settings_delete',
+        title: 'Удаление настроек',
+      },
+      {
         id: 22,
         code: 'menu_read',
         title: 'Просмотр бокового и верхнего меню',

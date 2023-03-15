@@ -1,7 +1,7 @@
 import Schema from './Schema.mjs';
 
 export default class PermissionSchema extends Schema {
-  static get() {
+  get() {
     return {
       type: 'object',
       properties: {

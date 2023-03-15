@@ -4,7 +4,8 @@ import {
 	UserOutlined,
 	UsergroupAddOutlined,
 	NodeIndexOutlined,
-	ContainerOutlined
+	ContainerOutlined,
+  SettingOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd'
 import React, { useContext, useEffect, useState } from 'react';
@@ -15,12 +16,11 @@ import { UserContext } from '../../../pages/_app';
 
 const { Header, Sider, Content } = Layout;
 
-const AppLayout = ({ children }) => {
+const AppLayout = ({ children, ...qwe }) => {
 	const router = useRouter();
 	const [collapsed, setCollapsed] = useState(true);
 	const [tabs, setTabs] = useState([]);
   const session = useContext(UserContext);
-  console.log(session.user.relationMembers[0].role.permissions.map(i => i.code), 2);
 
   useEffect(() => {
     async function setSidebar() {
@@ -68,6 +68,13 @@ const AppLayout = ({ children }) => {
             label: 'Ошибки',
             href: '/dictionaries/errorDescriptions',
             permission: 'errors_read',
+          },
+          {
+            key: 'settings',
+            icon: <SettingOutlined />,
+            label: 'Ошибки',
+            href: '/settings',
+            permission: 'settings_read',
           },
         ].filter((tab) => !tab.permission || userPermissions.includes(tab.permission)),
       );

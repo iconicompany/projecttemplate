@@ -2,7 +2,7 @@ export default class Schema {
   /**
    * @returns {object}
    */
-  static get() {
+  get() {
     return {}
   }
 }

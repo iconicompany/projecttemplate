@@ -1,24 +1,26 @@
 import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import btnStyles from '../../client/styles/buttons.module.scss'
+import btnStyles from '../../client/styles/components/buttons.module.scss'
 import Access from '../../client/components/core/Access';
 import PermissionUsecases from '../../src/usecases/PermissionUsecases.mjs';
 import Notification from '../../client/helpers/Notification';
-import PermissionResource from '../../client/resources/PermissionResource.mjs';
 import PermissionModal from '../../client/components/modals/PermissionModal';
 import { handlePage } from '../../src/core/index.mjs';
+import { AwilixContext } from '../_app';
 
 const { Title } = Typography;
 
 export default function Permissions({ data }) {
+  const { /** @type {PermissionResource} */ permissionResource } = useContext(AwilixContext);
+
   const [isOpen, setOpen] = useState(false);
   const [editedPermission, setEditedPermission] = useState({});
   const [tableData, setTableData] = useState(data);
 
   const refresh = async () => {
-    const permissions = await PermissionResource.getList();
+    const permissions = await permissionResource.getList();
 
     setTableData(permissions);
   }
@@ -35,7 +37,7 @@ export default function Permissions({ data }) {
 
   const remove = async (permission) => {
     if (confirm(`Удалить право ${permission.title}?`)) {
-      PermissionResource.delete(permission.id).then(() => {
+      permissionResource.delete(permission.id).then(() => {
         Notification.success();
         refresh();
       }).catch(err => Notification.error(err.message));

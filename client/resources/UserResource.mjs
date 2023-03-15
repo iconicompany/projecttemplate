@@ -1,5 +1,5 @@
 import PaginationCrudResource from './PaginationCrudResource.mjs';
 
 export default class UserResource extends PaginationCrudResource {
-  static path = 'users';
+  path = 'users';
 }

@@ -1,21 +1,27 @@
 import { Col, Modal, Row, Table, Typography } from 'antd';
 import { AutoField, AutoForm, BoolField, SubmitField } from 'uniforms-antd';
 import createSchemaBridge from '../../../src/libs/uniforms-bridge.mjs';
-import RoleSchema from '../../../src/scheme/RoleSchema.mjs';
-import { useEffect, useState } from 'react';
+import RoleSchema from '../../scheme/RoleSchema.mjs';
+import { useContext, useEffect, useState } from 'react';
 import Notification from '../../helpers/Notification';
-import RoleResource from '../../resources/RoleResource.mjs';
 import { arrayColumn, objectFill } from '../../helpers/utils.mjs';
+import { AwilixContext } from '../../../pages/_app';
 const { Title } = Typography;
 
 const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => {
+
+  const {
+    /** @type {RoleResource} */ roleResource,
+    /** @type {RoleSchema} */ roleSchema,
+  } = useContext(AwilixContext);
+
   const [model, setModel] = useState(role);
   useEffect(() => {
     setModel(buildModel(role));
   }, [role?.id]);
 
   const store = (data) => {
-    RoleResource.store({ ...data, id: role?.id })
+    roleResource.store({ ...data, id: role?.id })
       .then((result) => {
         Notification.success();
         hideModal();
@@ -92,7 +98,7 @@ const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => 
       <Modal title={getTitle()} visible={isOpen} footer={null} onCancel={hideModal} width={1200}>
         <AutoForm
           layout="horizontal"
-          schema={createSchemaBridge(RoleSchema.get(permissions))}
+          schema={createSchemaBridge(roleSchema.get(permissions))}
           onSubmit={store}
           model={model}>
           <Row>

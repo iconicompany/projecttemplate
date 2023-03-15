@@ -1,12 +1,18 @@
 import { Col, Modal, Row } from 'antd';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
 import createSchemaBridge from '../../../src/libs/uniforms-bridge.mjs';
-import PermissionSchema from '../../../src/scheme/PermissionSchema.mjs';
-import { useEffect, useState } from 'react';
+import PermissionSchema from '../../scheme/PermissionSchema.mjs';
+import { useContext, useEffect, useState } from 'react';
 import Notification from '../../helpers/Notification';
 import PermissionResource from '../../resources/PermissionResource.mjs';
+import { AwilixContext } from '../../../pages/_app';
 
 const PermissionModal = ({ permission = {}, isOpen, hideModal, afterSave }) => {
+  const {
+    /** @type {PermissionResource} */ permissionResource,
+    /** @type {PermissionSchema} */ permissionSchema,
+  } = useContext(AwilixContext);
+
   const [model, setModel] = useState(permission);
 
   useEffect(() => {
@@ -14,7 +20,7 @@ const PermissionModal = ({ permission = {}, isOpen, hideModal, afterSave }) => {
   }, [permission?.id]);
 
   const store = (data) => {
-    PermissionResource.store({ ...data, id: permission?.id }).then(result => {
+    permissionResource.store({ ...data, id: permission?.id }).then(result => {
       Notification.success();
       hideModal();
       afterSave && afterSave(result);
@@ -28,7 +34,7 @@ const PermissionModal = ({ permission = {}, isOpen, hideModal, afterSave }) => {
   return (
     <>
       <Modal title={getTitle()} visible={isOpen} footer={null} onCancel={hideModal}>
-        <AutoForm schema={createSchemaBridge(PermissionSchema.get())} onSubmit={store} model={model}>
+        <AutoForm schema={createSchemaBridge(permissionSchema.get())} onSubmit={store} model={model}>
           <AutoField name="title"/>
           <AutoField name="code"/>
           <SubmitField value="Сохранить"/>

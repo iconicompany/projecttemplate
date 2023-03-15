@@ -1,23 +1,12 @@
-import Api from '../helpers/Api.js';
+import Querable from '../../src/core/Querable.mjs';
 
-export default class Resource {
+export default class Resource extends Querable {
   path = '';
 
-  static async processRequest(method, url, data = {}) {
-    const res = await Api[method](url, data);
-
-    if (res.ok) {
-      try {
-        return this.handleResponse(res);
-      } catch (err) {
-        throw Error(err.message);
-      }
-    } else {
-      throw Error(res.body.error || res.body);
-    }
-  }
-
-  static handleResponse(res) {
-    return res.ok ? res.body : null;
+  constructor() {
+    super();
+    this.client.setConfig({
+      baseUrl: process.env.API_PATH
+    })
   }
 }
