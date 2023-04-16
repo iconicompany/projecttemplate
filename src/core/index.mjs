@@ -56,7 +56,7 @@ export async function handle(usecases, method, middlewares, responseHandler, con
 
     return responseHandler.build(result, context.res);
   } catch (exception) {
-    console.log(exception);
+    console.log('exception', exception);
     return responseHandler.exception(exception, context.res);
   }
 }

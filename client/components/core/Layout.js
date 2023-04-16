@@ -1,12 +1,12 @@
 import {
-	MenuFoldOutlined,
-	MenuUnfoldOutlined,
-	UserOutlined,
-	UsergroupAddOutlined,
-	NodeIndexOutlined,
-	ContainerOutlined,
-  SettingOutlined
-} from '@ant-design/icons';
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+  UsergroupAddOutlined,
+  NodeIndexOutlined,
+  ContainerOutlined,
+  SettingOutlined, PaperClipOutlined
+} from "@ant-design/icons";
 import { Layout, Menu } from 'antd'
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
@@ -40,6 +40,12 @@ const AppLayout = ({ children, ...qwe }) => {
             label: 'Заявки',
             href: '/offers',
             permission: 'offers_read',
+          },
+          {
+            key: 'Stocks',
+            icon: <PaperClipOutlined />,
+            label: 'Корректировка ценных бумаг',
+            href: '/stocks',
           },
           {
             key: 'users',
