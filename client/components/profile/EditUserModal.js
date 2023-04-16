@@ -7,7 +7,7 @@ import UserResource from '../../resources/UserResource.mjs';
 import Notification from '../../helpers/Notification';
 import UserSchema from '../../scheme/UserSchema.mjs';
 import UserModelBuilder from '../../builders/UserModelBuilder.mjs';
-import { AwilixContext } from '../../../pages/_app';
+import { AwilixContext } from '../../../src/pages/_app';
 
 
 const EditUserModal = ({ isOpen, hideModal, user = {} , roles, afterSave }) => {

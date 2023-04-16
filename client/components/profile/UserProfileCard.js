@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import EditUserModal from './EditUserModal';
 import Access from '../core/Access';
 import UserModelBuilder from '../../builders/UserModelBuilder.mjs';
-import { AwilixContext } from '../../../pages/_app';
+import { AwilixContext } from '../../../src/pages/_app';
 
 const UserProfileCard = ({ user, roles, afterSave }) => {
   const { /** @type {UserResource} */ userResource, userSchema } = useContext(AwilixContext);

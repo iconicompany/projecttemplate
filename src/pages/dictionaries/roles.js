@@ -2,12 +2,12 @@ import { Button, Table, Typography } from 'antd';
 import { Card } from 'antd';
 import { useContext, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import btnStyles from '../../client/styles/components/buttons.module.scss'
-import RoleUsecases from '../../src/usecases/RoleUsecases.mjs';
-import Access from '../../client/components/core/Access';
-import RoleModal from '../../client/components/modals/RoleModal';
-import Notification from '../../client/helpers/Notification';
-import { handlePage } from '../../src/core/index.mjs';
+import btnStyles from '../../../client/styles/components/buttons.module.scss'
+import RoleUsecases from '../../../src/usecases/RoleUsecases.mjs';
+import Access from '../../../client/components/core/Access';
+import RoleModal from '../../../client/components/modals/RoleModal';
+import Notification from '../../../client/helpers/Notification';
+import { handlePage } from '../../core/index.mjs';
 import { AwilixContext } from '../_app';
 const { Title } = Typography;
 

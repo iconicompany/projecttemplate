@@ -5,7 +5,7 @@ import RoleSchema from '../../scheme/RoleSchema.mjs';
 import { useContext, useEffect, useState } from 'react';
 import Notification from '../../helpers/Notification';
 import { arrayColumn, objectFill } from '../../helpers/utils.mjs';
-import { AwilixContext } from '../../../pages/_app';
+import { AwilixContext } from '../../../src/pages/_app';
 const { Title } = Typography;
 
 const RoleModal = ({ role = {}, permissions, isOpen, hideModal, afterSave }) => {

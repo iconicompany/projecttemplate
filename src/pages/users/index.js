@@ -4,10 +4,10 @@ const { Title } = Typography;
 import { Card } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import UserUsecases from '../../src/usecases/UserUsecases.mjs';
-import EditUserModal from '../../client/components/profile/EditUserModal';
-import Access from '../../client/components/core/Access';
-import { handlePage } from '../../src/core/index.mjs';
+import UserUsecases from '../../usecases/UserUsecases.mjs';
+import EditUserModal from '../../../client/components/profile/EditUserModal';
+import Access from '../../../client/components/core/Access';
+import { handlePage } from '../../core/index.mjs';
 import { AwilixContext } from '../_app';
 
 export default function UserList({ roles }) {

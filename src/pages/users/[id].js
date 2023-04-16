@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Col, Row } from 'antd';
-import UserUsecases from '../../src/usecases/UserUsecases.mjs';
-import styles from '../../client/styles/pages/User.module.scss';
-import UserProfileCard from '../../client/components/profile/UserProfileCard';
-import UserInfoCard from '../../client/components/profile/UserInfoCard';
-import { handlePage } from '../../src/core/index.mjs';
+import UserUsecases from '../../usecases/UserUsecases.mjs';
+import styles from '../../../client/styles/pages/User.module.scss';
+import UserProfileCard from '../../../client/components/profile/UserProfileCard';
+import UserInfoCard from '../../../client/components/profile/UserInfoCard';
+import { handlePage } from '../../core/index.mjs';
 
 export default function Home({ roles, user }) {
   const [userData, setUser] = useState(user);

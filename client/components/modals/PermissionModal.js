@@ -5,7 +5,7 @@ import PermissionSchema from '../../scheme/PermissionSchema.mjs';
 import { useContext, useEffect, useState } from 'react';
 import Notification from '../../helpers/Notification';
 import PermissionResource from '../../resources/PermissionResource.mjs';
-import { AwilixContext } from '../../../pages/_app';
+import { AwilixContext } from '../../../src/pages/_app';
 
 const PermissionModal = ({ permission = {}, isOpen, hideModal, afterSave }) => {
   const {

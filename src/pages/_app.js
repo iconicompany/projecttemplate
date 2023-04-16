@@ -1,12 +1,12 @@
 import { getSession, SessionProvider } from 'next-auth/react';
 import 'antd/dist/antd.css';
-import '../client/styles/core.scss';
-import Layout from '../client/components/core/Layout';
-import GuestLayout from '../client/components/core/GuestLayout';
+import '../../client/styles/core.scss';
+import Layout from '../../client/components/core/Layout';
+import GuestLayout from '../../client/components/core/GuestLayout';
 import App from 'next/app';
 import React, { createContext } from 'react';
-import '../client/helpers/functions.mjs';
-import Kernel from '../client/Kernel.mjs';
+import '../../client/helpers/functions.mjs';
+import Kernel from '../../client/Kernel.mjs';
 
 export const UserContext = createContext({});
 export const AwilixContext = createContext({});

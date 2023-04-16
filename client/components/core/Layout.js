@@ -12,7 +12,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import LoginBtn from './LoginBtn'
 import { getUserPermissions } from '../../helpers/utils.mjs';
-import { UserContext } from '../../../pages/_app';
+import { UserContext } from '../../../src/pages/_app';
 
 const { Header, Sider, Content } = Layout;
 
