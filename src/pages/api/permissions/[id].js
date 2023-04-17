@@ -1,5 +1,5 @@
 import { createRouter } from 'next-connect';
-import PermissionUsecases from '../../../core/usecases/PermissionUsecases.mjs';
+import PermissionUsecases from '../../../usecases/PermissionUsecases.mjs';
 import { handleRequest } from '../../../core/index.mjs';
 
 export default createRouter()

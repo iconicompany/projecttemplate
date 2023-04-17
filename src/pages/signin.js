@@ -2,7 +2,7 @@ import { withRouter } from 'next/router';
 import Notification from '../../client/helpers/Notification';
 import { signIn } from '../../client/resources/auth';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
-import createSchemaBridge from './libs/uniforms-bridge.mjs';
+import createSchemaBridge from '../libs/uniforms-bridge.mjs';
 import { useContext } from 'react';
 import { AwilixContext } from './_app';
 

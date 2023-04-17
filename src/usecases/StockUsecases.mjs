@@ -9,7 +9,6 @@ export default class StockUsecases extends Usecases {
    */
   async index({ stockRepository, request }) {
     const stocks = await stockRepository.getAll(request);
-    console.log(stocks)
 
     return { stocks };
   }
