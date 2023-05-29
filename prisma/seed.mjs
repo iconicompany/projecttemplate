@@ -1,4 +1,4 @@
-import prisma from '@/prisma.mjs';
+import prisma from '@/libs/prisma.mjs';
 import BusinessEntitySeeder from './seeds/BusinessEntitySeeder.mjs';
 import PermissionSeeder from './seeds/PermissionSeeder.mjs';
 import RoleSeeder from './seeds/RoleSeeder.mjs';
