@@ -1,6 +1,6 @@
 import { Col, Modal, Row, Table, Typography } from 'antd';
 import { AutoField, AutoForm, BoolField, SubmitField } from 'uniforms-antd';
-import createSchemaBridge from '../../../src/libs/uniforms-bridge.mjs';
+import createSchemaBridge from '@/libs/uniforms-bridge.mjs';
 import RoleSchema from '../../scheme/RoleSchema.mjs';
 import { useContext, useEffect, useState } from 'react';
 import Notification from '../../helpers/Notification';

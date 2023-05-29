@@ -1,4 +1,4 @@
-import AuthHelper from '../../src/helpers/AuthHelper.mjs';
+import AuthHelper from '@/helpers/AuthHelper.mjs';
 
 export const filterObjByKey = (object, keys) => {
   return Object.keys(object)

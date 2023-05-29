@@ -14,7 +14,7 @@ pnpm install // or npm install
 ```
 4. Запуск миграций:
 ```
-prisma migrate dev
+npm run migrate:dev
 ```
 Если не выполнились сиды:
 ```
