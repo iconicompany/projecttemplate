@@ -19,6 +19,9 @@
   "prisma": {
     "seed": "ldapenv node --experimental-specifier-resolution=node prisma/seed.mjs"
   },
+  "browserslist": [
+    ">0.3%, defaults, supports es5"
+  ],
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@babel/core": "^7.0.0",
@@ -31,7 +34,7 @@
     "awilix": "^7.0.3",
     "bcrypt": "^5.0.1",
     "glob": "^8.0.3",
-    "next": "12.3.0",
+    "next": "^13.4.4",
     "next-auth": "^4.15.1",
     "next-compose-plugins": "^2.2.1",
     "next-connect": "^1.0.0-next.2",
