@@ -1,4 +1,4 @@
-import Querable from '../../src/core/Querable.mjs';
+import Querable from '@/core/Querable.mjs';
 
 export default class Resource extends Querable {
   path = '';

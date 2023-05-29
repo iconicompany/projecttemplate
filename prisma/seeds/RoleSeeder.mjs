@@ -1,4 +1,4 @@
-import Seeder from '../../src/core/Seeder.mjs';
+import Seeder from '@/core/Seeder.mjs';
 
 export default class RoleSeeder extends Seeder {
   async run() {

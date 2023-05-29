@@ -1,4 +1,4 @@
-import Seeder from '../../src/core/Seeder.mjs';
+import Seeder from '@/core/Seeder.mjs';
 
 export default class RelationMemberSeeder extends Seeder {
   async run() {

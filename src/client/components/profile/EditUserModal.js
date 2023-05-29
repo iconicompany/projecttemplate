@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
-import createSchemaBridge from '../../../src/libs/uniforms-bridge.mjs';
+import createSchemaBridge from '@/libs/uniforms-bridge.mjs';
 import Map from '../../helpers/Map';
 import { useContext, useEffect, useState } from 'react';
 import UserResource from '../../resources/UserResource.mjs';

@@ -1,9 +1,9 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import AuthUsecases from '../../../src/usecases/AuthUsecases.mjs';
-import { createScope, handle } from '../../../src/core/index.mjs';
-import JsonContext from '../../../src/core/contexts/JsonContext.mjs';
-import PageResponse from '../../../src/core/responses/PageResponse.mjs';
+import AuthUsecases from '@/usecases/AuthUsecases.mjs';
+import { createScope, handle } from '@/core/index.mjs';
+import JsonContext from '@/core/contexts/JsonContext.mjs';
+import PageResponse from '@/core/responses/PageResponse.mjs';
 
 export default NextAuth({
   providers: [
