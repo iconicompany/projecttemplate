@@ -6,6 +6,8 @@
     "dev": "ldapenv next dev",
     "build": "ldapenv next build",
     "start": "ldapenv next start",
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:dev": "prisma migrate dev",
     "ilb-build": "ldapenv prisma generate && ldapenv next build",
     "ilb-deploy": "ldapenv prisma migrate deploy",
     "clean": "rimraf ./.next ./out",
