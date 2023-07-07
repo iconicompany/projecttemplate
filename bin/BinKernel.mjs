@@ -1,6 +1,6 @@
 import { asValue, createContainer } from 'awilix';
-import prisma from '../src/libs/prisma.mjs';
-import AwilixRegistrar from '../src/libs/AwilixRegistrar.mjs';
+import prisma from '@/libs/prisma.mjs';
+import AwilixRegistrar from '@/libs/AwilixRegistrar.mjs';
 
 export default class BinKernel {
 	constructor() {

@@ -1,7 +1,7 @@
 import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
 import ajv from './ajv.mjs';
 import localize from 'ajv-i18n';
-import ErrorFormatter from '../../client/helpers/ErrorFormatter.mjs';
+import ErrorFormatter from '@/client/helpers/ErrorFormatter.mjs';
 
 const createValidator = (schema, additionalValidator) => {
   const validator = ajv.compile(schema);
@@ -18,7 +18,7 @@ const createValidator = (schema, additionalValidator) => {
     if (additionalValidator) {
       errors = errors.concat(additionalValidator(model));
     }
-    console.log(errors);
+
     if (errors.length) {
       localize.ru(errors);
       return { details: ErrorFormatter.make(errors, schema) };
