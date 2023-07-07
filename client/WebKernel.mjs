@@ -8,7 +8,7 @@ import UserSchema from './scheme/UserSchema.mjs';
 import SigninSchema from './scheme/SigninSchema.mjs';
 import SignupSchema from './scheme/SignupSchema.mjs';
 
-export default class Kernel {
+export default class WebKernel {
   constructor() {
     this.container = createContainer();
   }

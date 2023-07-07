@@ -4,7 +4,7 @@ import Access from './core/Access.mjs';
 import AwilixRegistrar from './libs/AwilixRegistrar.mjs';
 import { isProduction } from './helpers/utils.mjs';
 
-export default class Kernel {
+export default class AppKernel {
   constructor() {
     this.container = createContainer();
     this.awilixRegistrar = new AwilixRegistrar(this.container);

@@ -1,18 +1,17 @@
 import { getSession, SessionProvider } from 'next-auth/react';
-import 'antd/dist/antd.css';
 import '../client/styles/core.scss';
 import Layout from '../client/components/core/Layout';
 import GuestLayout from '../client/components/core/GuestLayout';
 import App from 'next/app';
 import React, { createContext } from 'react';
 import '../client/helpers/functions.mjs';
-import Kernel from '../client/Kernel.mjs';
+import WebKernel from '../client/WebKernel.mjs';
 
 export const UserContext = createContext({});
 export const AwilixContext = createContext({});
 
 function MyApp({ Component, pageProps, session }) {
-  const kernel = new Kernel();
+  const kernel = new WebKernel();
   const scope = kernel.createApplication();
 
   return (

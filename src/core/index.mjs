@@ -72,14 +72,14 @@ async function startMiddlewares(scope, context, middlewares) {
  * @return {Promise<AwilixContainer<any>>}
  */
 export async function createScope(context) {
-  const Kernel = (await import('../Kernel.mjs')).default;
+  const Kernel = (await import('../AppKernel.mjs')).default;
   const kernel = new Kernel();
 
   return kernel.createApplication(context);
 }
 
 export async function createBinScope() {
-  const Kernel = (await import('../../bin/Kernel.mjs')).default;
+  const Kernel = (await import('../../bin/BinKernel.mjs')).default;
   const kernel = new Kernel();
 
   return kernel.createApplication();
