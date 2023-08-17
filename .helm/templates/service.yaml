@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: projecttemplate
+spec:
+  selector:
+    app: projecttemplate
+  ports:
+  - name: http
+    port: 3000
